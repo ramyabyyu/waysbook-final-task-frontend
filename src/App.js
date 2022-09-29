@@ -5,6 +5,7 @@ import * as Path from "./routeNames";
 import Header from "./components/Header/Header";
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path={Path.HOME} element={<Home />} />
         <Route path={Path.AUTH} element={<Auth />} />
+        <Route path={Path.PROFILE} element={<Profile />} />
       </Routes>
     </>
   );

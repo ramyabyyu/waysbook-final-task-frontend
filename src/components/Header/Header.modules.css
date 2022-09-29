@@ -2,3 +2,8 @@
   background: transparent;
   z-index: 999;
 }
+
+.dropdown__btn {
+  background: transparent !important;
+  border: none !important;
+}

@@ -6,7 +6,6 @@
 }
 .jumbotron {
   position: relative;
-  height: 50vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -16,7 +15,15 @@
   background-position: center;
 }
 
-.jumbotron__text {
+.half__height {
+  height: 50vh;
+}
+
+.full__height {
+  height: 100vh;
+}
+
+.jumbotron__content {
   position: absolute;
   display: flex;
   flex-direction: column;
