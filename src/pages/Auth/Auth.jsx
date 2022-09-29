@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import * as Path from "../../routeNames";
+import Jumbotron from "../../components/Jumbotron/Jumbotron";
 
 const initialUserState = {
   full_name: "",

@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
+import BecomeSeller from "./pages/BecomeSeller/BecomeSeller";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path={Path.HOME} element={<Home />} />
         <Route path={Path.AUTH} element={<Auth />} />
         <Route path={Path.PROFILE} element={<Profile />} />
+        <Route path={Path.BECOME_SELLER} element={<BecomeSeller />} />
       </Routes>
     </>
   );

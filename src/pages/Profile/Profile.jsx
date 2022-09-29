@@ -1,6 +1,6 @@
 import React from "react";
 import Jumbotron from "../../components/Jumbotron/Jumbotron";
-import { Button, Card } from "react-bootstrap";
+import { Badge, Button, Card } from "react-bootstrap";
 import "./Profile.modules.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ import {
   FaQuestionCircle,
   FaUserAlt,
 } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { getProfile, reset } from "../../features/profile/profileSlice";
 
 const Profile = () => {
@@ -42,9 +43,17 @@ const Profile = () => {
           <div className="me-5">
             <div className="mt-3">
               <div className="d-flex mb-3 align-items-start">
-                <FaUserAlt className="text-secondary me-3 fs-1" />
+                {profile?.isSeller ? (
+                  <RiAdminFill className="text-secondary me-3 fs-1" />
+                ) : (
+                  <FaUserAlt className="text-secondary me-3 fs-1" />
+                )}
+
                 <div>
-                  <h5>{profile?.full_name}</h5>
+                  <h5>
+                    {profile?.full_name}
+                    {profile?.is_seller && <Badge bg="secondary">Seller</Badge>}
+                  </h5>
                   <p className="text-muted">Full Name</p>
                 </div>
               </div>

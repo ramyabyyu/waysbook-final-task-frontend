@@ -1,15 +1,17 @@
 import React from "react";
 import "./Header.modules.css";
 import * as Path from "../../routeNames";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import waysbookLogo from "../../assets/Frame.png";
 import noPhoto from "../../assets/no-people.png";
 import { Button, Dropdown, Badge } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-import { FaUserAlt, FaCommentAlt } from "react-icons/fa";
+import { FaUserAlt, FaCommentAlt, FaSignOutAlt } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { getProfile, reset } from "../../features/profile/profileSlice";
+import { logout } from "../../features/auth/authSlice";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,17 +19,23 @@ const Header = () => {
   const { profile } = useSelector((state) => state.profile);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate(Path.AUTH);
+  };
 
   useEffect(() => {
     if (token) {
       setIsLogin(true);
       dispatch(getProfile());
-    }
+    } else setIsLogin(false);
 
     return () => {
       dispatch(reset());
     };
-  }, [token, isLogin, dispatch]);
+  }, [token, dispatch]);
 
   return (
     <nav className="navbar navbar-expand-lg waysbook__navbar sticky-top">
@@ -71,6 +79,20 @@ const Header = () => {
                     <Dropdown.Item as={Link} to={Path.PROFILE}>
                       <FaCommentAlt className="text-dark me-2" />
                       <span>Complain</span>
+                    </Dropdown.Item>
+                    {!profile?.is_seller && (
+                      <Dropdown.Item as={Link} to={Path.BECOME_SELLER}>
+                        <RiAdminFill className="text-dark me-2" />
+                        <span>Become Seller</span>
+                      </Dropdown.Item>
+                    )}
+                    <Dropdown.Divider
+                      className="bg-secondary"
+                      onClick={handleLogout}
+                    />
+                    <Dropdown.Item onClick={handleLogout}>
+                      <FaSignOutAlt className="text-dark me-2" />
+                      <span>Logout</span>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
