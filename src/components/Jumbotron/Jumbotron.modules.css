@@ -1,0 +1,25 @@
+.jumbotron__container {
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.jumbotron {
+  position: relative;
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../assets/storytelling1.png);
+  /* background-repeat: no-repeat; */
+  background-position: center;
+}
+
+.jumbotron__text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

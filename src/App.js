@@ -1,16 +1,19 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
+import * as Path from "./routeNames";
+import Header from "./components/Header/Header";
 import Auth from "./pages/Auth/Auth";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
     <>
-      <Container className="mt-5">
-        <Routes>
-          <Route path="/auth" element={<Auth />} />
-        </Routes>
-      </Container>
+      <Header />
+      <Routes>
+        <Route path={Path.HOME} element={<Home />} />
+        <Route path={Path.AUTH} element={<Auth />} />
+      </Routes>
     </>
   );
 }
