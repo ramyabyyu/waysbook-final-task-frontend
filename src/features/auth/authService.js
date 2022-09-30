@@ -1,4 +1,5 @@
 import { API } from "../../config/api";
+import { jsonHeaderConfig } from "../../config/configHeader";
 
 const auth = async (userData, isRegister) => {
   let response;
@@ -13,7 +14,6 @@ const auth = async (userData, isRegister) => {
     localStorage.setItem("token", token);
     return token;
   } else if (response.status === 400) {
-    console.log("bad request=", response.data.message);
     return response.data.message;
   }
   return response.data;
@@ -23,9 +23,28 @@ const logout = () => {
   localStorage.removeItem("token");
 };
 
+const becomeSeller = async (userData) => {
+  const response = await API.post(
+    "/become-seller",
+    userData,
+    jsonHeaderConfig(null)
+  );
+
+  if (response.status === 200) {
+    // replace the old token with the new token
+    const newToken = response.data.data.token;
+    localStorage.setItem("token", newToken);
+
+    return newToken;
+  }
+
+  return response.data;
+};
+
 const authService = {
   auth,
   logout,
+  becomeSeller,
 };
 
 export default authService;

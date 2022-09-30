@@ -21,6 +21,18 @@ export const getAllBooks = createAsyncThunk(
   }
 );
 
+export const addBook = createAsyncThunk(
+  "book/add",
+  async (bookData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await bookService.addBook(bookData, token);
+    } catch (error) {
+      serviceErrorMessage(error, thunkAPI);
+    }
+  }
+);
+
 export const bookSlice = createSlice({
   name: "book",
   initialState,
@@ -36,12 +48,28 @@ export const bookSlice = createSlice({
       .addCase(getAllBooks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.books.push(action.payload);
+        state.books = action.payload;
       })
       .addCase(getAllBooks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(addBook.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addBook.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.books.push(action.payload);
+      })
+      .addCase(addBook.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       });
   },
 });
+
+export const { reset } = bookSlice.actions;
+export default bookSlice.reducer;

@@ -6,8 +6,14 @@ const getALlBooks = async () => {
   return response.data.data;
 };
 
+const addBook = async (bookData, token) => {
+  const response = await API.post("/book", bookData, jsonHeaderConfig(token));
+  return response.data.data;
+};
+
 const bookService = {
   getALlBooks,
+  addBook,
 };
 
 export default bookService;

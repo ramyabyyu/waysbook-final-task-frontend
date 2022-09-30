@@ -22,18 +22,6 @@ export const getProfile = createAsyncThunk(
   }
 );
 
-export const changeUserRole = createAsyncThunk(
-  "profile/changeUserRole",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.token;
-      return await profileService.changeUserRole(token);
-    } catch (error) {
-      serviceErrorMessage(error, thunkAPI);
-    }
-  }
-);
-
 export const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -57,19 +45,6 @@ export const profileSlice = createSlice({
         state.profile = action.payload;
       })
       .addCase(getProfile.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-      .addCase(changeUserRole.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(changeUserRole.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.profile = action.payload;
-      })
-      .addCase(changeUserRole.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

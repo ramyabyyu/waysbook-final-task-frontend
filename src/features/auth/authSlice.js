@@ -44,6 +44,18 @@ export const logout = createAsyncThunk(
   async () => await authService.logout()
 );
 
+// Become Seller
+export const becomeSeller = createAsyncThunk(
+  "auth/becomeSeller",
+  async (token, thunkAPI) => {
+    try {
+      return await authService.becomeSeller(token);
+    } catch (error) {
+      serviceErrorMessage(error, thunkAPI);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -88,6 +100,19 @@ export const authSlice = createSlice({
       // logout
       .addCase(logout.fulfilled, (state) => {
         state.token = null;
+      })
+      .addCase(becomeSeller.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(becomeSeller.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.token = action.payload;
+      })
+      .addCase(becomeSeller.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });

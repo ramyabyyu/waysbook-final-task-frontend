@@ -14,31 +14,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Path from "../../routeNames";
-import { changeUserRole, reset } from "../../features/profile/profileSlice";
+import { becomeSeller, reset } from "../../features/auth/authSlice";
 import Jumbotron from "../../components/Jumbotron/Jumbotron";
 
 const BecomeSeller = () => {
   const [agreementCheck, setAgreementCheck] = useState(false);
 
-  const { token } = useSelector((state) => state.auth);
-  const { isSuccess, isLoading } = useSelector((state) => state.profile);
+  const { token, isSucces, isLoading } = useSelector((state) => state.auth);
+  const { profile } = useSelector((state) => state.profile);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!token) navigate(Path.AUTH);
-  }, [token]);
+
+    if (profile?.is_seller) navigate(Path.HOME);
+  }, [token, profile]);
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate(Path.AUTH);
-    }
-
-    return () => {
-      dispatch(reset());
-    };
-  }, [isSuccess, dispatch]);
+    if (isSucces) navigate(Path.PROFILE);
+    dispatch(reset());
+  }, [isSucces, dispatch, navigate]);
 
   const handleChange = () => {
     setAgreementCheck(!agreementCheck);
@@ -47,7 +44,11 @@ const BecomeSeller = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(changeUserRole());
+    const formData = new FormData();
+    formData.set("user_id", profile?.id);
+    formData.set("is_seller", profile?.is_seller);
+
+    dispatch(becomeSeller(formData));
   };
 
   return (

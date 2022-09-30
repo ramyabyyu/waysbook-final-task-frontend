@@ -8,7 +8,12 @@ import { Button, Dropdown, Badge } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-import { FaUserAlt, FaCommentAlt, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaUserAlt,
+  FaCommentAlt,
+  FaSignOutAlt,
+  FaBookMedical,
+} from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { getProfile, reset } from "../../features/profile/profileSlice";
 import { logout } from "../../features/auth/authSlice";
@@ -80,7 +85,14 @@ const Header = () => {
                       <FaCommentAlt className="text-dark me-2" />
                       <span>Complain</span>
                     </Dropdown.Item>
-                    {!profile?.is_seller && (
+                    {profile?.is_seller ? (
+                      <>
+                        <Dropdown.Item as={Link} to={Path.ADD_BOOK}>
+                          <FaBookMedical className="text-dark me-2" />
+                          <span>Add Book</span>
+                        </Dropdown.Item>
+                      </>
+                    ) : (
                       <Dropdown.Item as={Link} to={Path.BECOME_SELLER}>
                         <RiAdminFill className="text-dark me-2" />
                         <span>Become Seller</span>

@@ -52,7 +52,11 @@ const Profile = () => {
                 <div>
                   <h5>
                     {profile?.full_name}
-                    {profile?.is_seller && <Badge bg="secondary">Seller</Badge>}
+                    {profile?.is_seller && (
+                      <Badge bg="secondary" className="ms-2">
+                        Seller
+                      </Badge>
+                    )}
                   </h5>
                   <p className="text-muted">Full Name</p>
                 </div>
