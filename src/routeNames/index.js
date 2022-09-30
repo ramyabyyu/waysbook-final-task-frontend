@@ -6,3 +6,4 @@ export const BECOME_SELLER = "/become-seller";
 
 // Seller access pages
 export const ADD_BOOK = "/add-book";
+export const FILE_ATTACHMENT = "/file-attachment";

@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import BecomeSeller from "./pages/BecomeSeller/BecomeSeller";
 import AddBook from "./pages/Books/AddBook/AddBook";
+import FileAttachment from "./pages/Books/FileAttachment/FileAttachment";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path={Path.BECOME_SELLER} element={<BecomeSeller />} />
 
         <Route path={Path.ADD_BOOK} element={<AddBook />} />
+        <Route path={Path.FILE_ATTACHMENT} element={<FileAttachment />} />
       </Routes>
     </>
   );

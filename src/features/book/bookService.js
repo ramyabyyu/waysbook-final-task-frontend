@@ -1,7 +1,7 @@
 import { API } from "../../config/api";
 import { jsonHeaderConfig } from "../../config/configHeader";
 
-const getALlBooks = async () => {
+const getAllBooks = async () => {
   const response = await API.get("/books", jsonHeaderConfig(null));
   return response.data.data;
 };
@@ -12,7 +12,7 @@ const addBook = async (bookData, token) => {
 };
 
 const bookService = {
-  getALlBooks,
+  getAllBooks,
   addBook,
 };
 

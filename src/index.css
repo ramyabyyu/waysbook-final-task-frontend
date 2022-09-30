@@ -21,3 +21,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.bg-group {
+  background-color: #e4e1e1 !important;
+  color: #222 !important;
+}
+
+.bg-group::placeholder {
+  color: #222 !important;
+}
+
+/* ::-webkit-scrollbar {
+  width: 10px;
+} */
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+  background: #969696;
+  box-shadow: inset 0 0 5px #939393;
+} */
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: #383838;
+  border-radius: 1rem;
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #262525;
+} */

@@ -14,7 +14,7 @@ export const getAllBooks = createAsyncThunk(
   "book/getAll",
   async (_, thunkAPI) => {
     try {
-      return await bookService.getALlBooks();
+      return await bookService.getAllBooks();
     } catch (error) {
       serviceErrorMessage(error, thunkAPI);
     }

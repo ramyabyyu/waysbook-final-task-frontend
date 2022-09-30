@@ -91,6 +91,7 @@ const Auth = () => {
                     type="text"
                     placeholder="Full Name"
                     onChange={handleChange}
+                    className="bg-group"
                   />
                 </div>
               )}
@@ -100,6 +101,7 @@ const Auth = () => {
                   type="email"
                   placeholder="Email"
                   onChange={handleChange}
+                  className="bg-group"
                 />
               </div>
               <div className="mb-3">
@@ -108,6 +110,7 @@ const Auth = () => {
                   type="password"
                   placeholder="Password"
                   onChange={handleChange}
+                  className="bg-group"
                 />
               </div>
               <div className="mb-3">
