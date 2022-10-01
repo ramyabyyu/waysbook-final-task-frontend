@@ -1,6 +1,8 @@
 .waysbook__navbar {
   background: transparent;
+  /* background-image: url(../../assets/storytelling1.png); */
   z-index: 999;
+  position: absolute;
 }
 
 .dropdown__btn {

@@ -1,12 +1,35 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
-.home__section {
-  overflow-x: hidden;
-}
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn&display=swap");
 
 .jumbotron__text {
-  font-family: "Lato", sans-serif;
+  font-family: "Vollkorn", serif;
   font-weight: 400;
   font-size: 43px;
   line-height: 59.9px;
+}
+
+.home__jumbotron {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title__book-font {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 28px;
+  font-style: normal;
+  width: 250px;
+}
+
+.description {
+  text-align: justify;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 121.5%;
+  width: 223.9px;
 }

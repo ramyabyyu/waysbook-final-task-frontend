@@ -1,32 +1,17 @@
-.jumbotron__container {
-  width: 100vw;
+.jumbotron {
+  background-image: url(../../assets/storytelling1.png);
+  /* background-color: red; */
+  background-position: center;
   position: absolute;
   top: 0;
   left: 0;
-}
-.jumbotron {
-  position: relative;
   width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(../../assets/storytelling1.png);
-  /* background-repeat: no-repeat; */
-  background-position: center;
-}
-
-.half__height {
-  height: 50vh;
 }
 
 .full__height {
   height: 100vh;
 }
 
-.jumbotron__content {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.half__height {
+  height: 50vh;
 }

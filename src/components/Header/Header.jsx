@@ -66,11 +66,7 @@ const Header = () => {
                 <Dropdown>
                   <Dropdown.Toggle id="user-dropdown" className="dropdown__btn">
                     <img
-                      src={
-                        profile?.photo !== "http://localhost:8080/uploads/-"
-                          ? profile?.photo
-                          : noPhoto
-                      }
+                      src={profile?.is_photo_change ? profile?.photo : noPhoto}
                       alt="photo"
                       width={40}
                       className="rounded-pill"

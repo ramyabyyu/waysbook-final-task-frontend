@@ -4,6 +4,7 @@ import bookService from "./bookService";
 
 const initialState = {
   books: [],
+  promoBooks: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -27,6 +28,17 @@ export const addBook = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.token;
       return await bookService.addBook(bookData, token);
+    } catch (error) {
+      serviceErrorMessage(error, thunkAPI);
+    }
+  }
+);
+
+export const getPromoBooks = createAsyncThunk(
+  "book/getPromo",
+  async (_, thunkAPI) => {
+    try {
+      return await bookService.getPromoBooks();
     } catch (error) {
       serviceErrorMessage(error, thunkAPI);
     }
@@ -64,6 +76,19 @@ export const bookSlice = createSlice({
         state.books.push(action.payload);
       })
       .addCase(addBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getPromoBooks.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getPromoBooks.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.promoBooks = action.payload;
+      })
+      .addCase(getPromoBooks.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
