@@ -45,6 +45,42 @@ export const getPromoBooks = createAsyncThunk(
   }
 );
 
+export const getUserBooks = createAsyncThunk(
+  "book/getUsers",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await bookService.getUserBooks(token);
+    } catch (error) {
+      serviceErrorMessage(error, thunkAPI);
+    }
+  }
+);
+
+export const getBookBySlug = createAsyncThunk(
+  "book/getBySlug",
+  async (slug, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await bookService.getBookBySlug(slug, token);
+    } catch (error) {
+      serviceErrorMessage(error, thunkAPI);
+    }
+  }
+);
+
+export const updateBookPromo = createAsyncThunk(
+  "book/updatePromo",
+  async (promoData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await bookService.updateBookPromo(promoData, token);
+    } catch (error) {
+      serviceErrorMessage(error, thunkAPI);
+    }
+  }
+);
+
 export const bookSlice = createSlice({
   name: "book",
   initialState,
@@ -89,6 +125,45 @@ export const bookSlice = createSlice({
         state.promoBooks = action.payload;
       })
       .addCase(getPromoBooks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getUserBooks.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserBooks.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.books = action.payload;
+      })
+      .addCase(getUserBooks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getBookBySlug.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBookBySlug.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.books = action.payload;
+      })
+      .addCase(getBookBySlug.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateBookPromo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateBookPromo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.promoBooks.push(action.payload);
+      })
+      .addCase(updateBookPromo.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

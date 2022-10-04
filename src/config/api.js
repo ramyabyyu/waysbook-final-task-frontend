@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const noFile = "http://localhost:8080/uploads/-";
+export const noFileURL = "http://localhost:8080/uploads/-";
 
 export const API = axios.create({
   baseURL: "http://localhost:8080/api/v1/",

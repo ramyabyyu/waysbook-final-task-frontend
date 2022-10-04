@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import "./Profile.modules.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Path from "../../routeNames";
 import { useEffect } from "react";
 import noPhoto from "../../assets/no-people.png";
@@ -24,14 +24,27 @@ import {
   FaMapMarkerAlt,
   FaQuestionCircle,
   FaUserAlt,
+  FaUserCheck,
+  FaCartPlus,
 } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { getProfile, reset } from "../../features/profile/profileSlice";
+import {
+  getUserBooks,
+  reset as bookReset,
+} from "../../features/book/bookSlice";
 import MainSection from "../../components/MainSection/MainSection";
+import {
+  formatRupiah,
+  noFileAvailable,
+  subStr,
+} from "../../helpers/bookHelpers";
+import { noFileURL } from "../../config/api";
 
 const Profile = () => {
   const { token } = useSelector((state) => state.auth);
   const { profile } = useSelector((state) => state.profile);
+  const { books } = useSelector((state) => state.book);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,10 +52,12 @@ const Profile = () => {
   useEffect(() => {
     if (token) {
       dispatch(getProfile());
+      dispatch(getUserBooks());
     } else navigate(Path.AUTH);
 
     return () => {
       dispatch(reset());
+      dispatch(bookReset());
     };
   }, [token, dispatch, navigate]);
 
@@ -168,7 +183,57 @@ const Profile = () => {
       <MainSection>
         <Container>
           <Row>
-            <Col md={12}></Col>
+            {books?.map((book) => (
+              <Col md={3} key={book.id} className="me-3 mb-3">
+                <Card
+                  className="rounded border-0 shadow p-2"
+                  style={{ height: "38rem" }}
+                >
+                  <Link
+                    className="text-decoration-none"
+                    to={Path.BOOK_DETAIL + book.slug}
+                  >
+                    <img
+                      src={noFileAvailable(book.thumbnail, noFileURL, noImage)}
+                      style={{
+                        width: "18rem",
+                        height: "20rem",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Link>
+
+                  <div className="p-2">
+                    <h4 className="font-serif title__book-font">
+                      {subStr(book.title, 20)}
+                    </h4>
+                    <h6 className="text-muted fw-normal">
+                      By :{" "}
+                      <span className="text-muted fst-italic">
+                        {book.author}
+                      </span>
+                    </h6>
+                    <h4 className="text-success">
+                      {book.price_after_discount != 0
+                        ? formatRupiah(
+                            book.price_after_discount.toString(),
+                            "Rp. "
+                          )
+                        : formatRupiah(book.price.toString(), "Rp. ")}
+                    </h4>
+                    <Button
+                      variant="dark"
+                      className="mt-5 d-flex justify-content-center align-items-center w-100"
+                      type="button"
+                      as={Link}
+                      to={Path.BOOK_DETAIL + book.slug}
+                    >
+                      <span>Edit</span>
+                    </Button>
+                  </div>
+                </Card>
+              </Col>
+            ))}
           </Row>
         </Container>
       </MainSection>

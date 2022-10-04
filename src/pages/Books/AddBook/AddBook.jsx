@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { addBook, reset } from "../../../features/book/bookSlice";
 import { RiHealthBookFill } from "react-icons/ri";
 import { useState } from "react";
-import { FaPaperclip } from "react-icons/fa";
+import { FaPaperclip, FaPhoneAlt, FaPhotoVideo } from "react-icons/fa";
 import { useEffect } from "react";
 import * as Path from "../../../routeNames";
 
 const initialBookState = {
   title: "",
+  author: "",
   p_date: "",
   p_month: "",
   p_year: "",
@@ -20,18 +21,25 @@ const initialBookState = {
   price: "",
   description: "",
   book_file: "",
+  thumbnail: "",
 };
 
 const AddBook = () => {
   const [bookData, setBookData] = useState(initialBookState);
+  const [thumbnailPreview, setThumbnailPreview] = useState("");
 
   const { book, isSuccess, isLoading } = useSelector((state) => state.book);
 
   const hiddenFileInput = useRef(null);
   const handleFileInput = (e) => hiddenFileInput.current.click();
-
   const handleFileChange = (files) => {
     setBookData({ ...bookData, book_file: files });
+  };
+
+  const hiddenImageInput = useRef(null);
+  const handleImageInput = (e) => hiddenImageInput.current.click();
+  const handleImageChange = (files) => {
+    setBookData({ ...bookData, thumbnail: files });
   };
 
   const handleChange = (e) => {
@@ -45,16 +53,28 @@ const AddBook = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSuccess) navigate(Path.PROFILE);
+    if (bookData.thumbnail !== "") {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        setThumbnailPreview(result);
+        document.getElementById("previewContainer").className = "my-4";
+        document.getElementById("imgPreview").classList.remove("d-none");
+      };
+      reader.readAsDataURL(bookData.thumbnail);
+    }
+  }, [bookData.thumbnail]);
 
+  useEffect(() => {
     dispatch(reset());
-  }, [isSuccess, dispatch, navigate]);
+  }, [dispatch, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const {
       title,
+      author,
       p_date,
       p_month,
       p_year,
@@ -63,24 +83,28 @@ const AddBook = () => {
       description,
       price,
       book_file,
+      thumbnail,
     } = bookData;
 
     const publication_date = `${p_year}-${p_month}-${p_date}`;
 
     const formData = new FormData();
     formData.set("title", title);
+    formData.set("author", author);
     formData.set("publication_date", publication_date);
     formData.set("pages", pages);
     formData.set("ISBN", ISBN);
     formData.set("price", price);
     formData.set("description", description);
     formData.set("document", book_file, book_file.name);
+    formData.set("image", thumbnail, thumbnail.name);
 
     dispatch(addBook(formData));
+    navigate(Path.PROFILE);
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="my-5">
       <Row className="justify-content-center">
         <Col md={10}>
           <Card className="rounded shadow border-0 p-5">
@@ -93,6 +117,16 @@ const AddBook = () => {
                   name="title"
                   onChange={handleChange}
                   placeholder="Title"
+                  className="bg-group"
+                />
+              </div>
+              <div className="mb-3">
+                <h6>Author</h6>
+                <Form.Control
+                  type="text"
+                  name="author"
+                  onChange={handleChange}
+                  placeholder="Author"
                   className="bg-group"
                 />
               </div>
@@ -204,6 +238,36 @@ const AddBook = () => {
                   <FaPaperclip />
                 </Button>
                 <h6 className="text-muted m-0">{bookData.book_file.name}</h6>
+              </div>
+              <div className="mb-3">
+                <input
+                  type="file"
+                  name="thumbnail"
+                  id="thumbnail"
+                  onChange={(e) => handleImageChange(e.target.files[0])}
+                  className="d-none"
+                  accept="image/*"
+                  ref={hiddenImageInput}
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="border border-dark d-flex align-items-center me-3"
+                  onClick={handleImageInput}
+                >
+                  <span className="me-2">Attache Thumbnail</span>
+                  <FaPhotoVideo />
+                </Button>
+              </div>
+              <div className="m-0" id="previewContainer">
+                <img
+                  src={thumbnailPreview}
+                  id="imgPreview"
+                  className="d-none rounded"
+                  width={200}
+                  height={200}
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <div className="mb-3 d-flex justify-content-end">
                 <Button

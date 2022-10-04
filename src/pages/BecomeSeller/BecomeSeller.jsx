@@ -52,74 +52,77 @@ const BecomeSeller = () => {
   };
 
   return (
-    <Jumbotron height="full">
-      <Row className="justify-content-center">
-        <Col md={4}>
-          <Card className="rounded shadow border-0 p-3">
-            <h3 className="text-center mb-5">Become a Seller</h3>
-            <h6>Become seller, and start to sell your book</h6>
-            <p className="text-muted">
-              In order to become a seller, first you have to agree with our
-              privacy policy
-            </p>
-            <div className="fake__privacy-policy">
-              <h6>Our Privacy Policy</h6>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde,
-                nostrum recusandae sit pariatur maxime, et fuga sequi non
-                suscipit dolor delectus placeat hic sunt nam mollitia iure
-                voluptates commodi numquam ipsam voluptate impedit officia
-                magnam. Laborum exercitationem eum, fugit maxime illum assumenda
-                dolor, ea, delectus blanditiis libero iste! Assumenda, veritatis
-                alias neque odio dignissimos nemo!
+    <>
+      <Jumbotron height="full" />
+      <Container className="mt-5">
+        <Row className="justify-content-center">
+          <Col md={4}>
+            <Card className="rounded shadow border-0 p-3">
+              <h3 className="text-center mb-5">Become a Seller</h3>
+              <h6>Become seller, and start to sell your book</h6>
+              <p className="text-muted">
+                In order to become a seller, first you have to agree with our
+                privacy policy
               </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde,
-                nostrum recusandae sit pariatur maxime, et fuga sequi non
-                suscipit dolor delectus placeat hic sunt nam mollitia iure
-                voluptates commodi numquam ipsam voluptate impedit officia
-                magnam. Laborum exercitationem eum, fugit maxime illum assumenda
-                dolor, ea, delectus blanditiis libero iste! Assumenda, veritatis
-                alias neque odio dignissimos nemo!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde,
-                nostrum recusandae sit pariatur maxime, et fuga sequi non
-                suscipit dolor delectus placeat hic sunt nam mollitia iure
-                voluptates commodi numquam ipsam voluptate impedit officia
-                magnam. Laborum exercitationem eum, fugit maxime illum assumenda
-                dolor, ea, delectus blanditiis libero iste! Assumenda, veritatis
-                alias neque odio dignissimos nemo!
-              </p>
-            </div>
-            <Form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  onChange={handleChange}
-                  id="agreement"
-                  label="I Agree"
-                />
+              <div className="fake__privacy-policy">
+                <h6>Our Privacy Policy</h6>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Unde, nostrum recusandae sit pariatur maxime, et fuga sequi
+                  non suscipit dolor delectus placeat hic sunt nam mollitia iure
+                  voluptates commodi numquam ipsam voluptate impedit officia
+                  magnam. Laborum exercitationem eum, fugit maxime illum
+                  assumenda dolor, ea, delectus blanditiis libero iste!
+                  Assumenda, veritatis alias neque odio dignissimos nemo!
+                </p>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Unde, nostrum recusandae sit pariatur maxime, et fuga sequi
+                  non suscipit dolor delectus placeat hic sunt nam mollitia iure
+                  voluptates commodi numquam ipsam voluptate impedit officia
+                  magnam. Laborum exercitationem eum, fugit maxime illum
+                  assumenda dolor, ea, delectus blanditiis libero iste!
+                  Assumenda, veritatis alias neque odio dignissimos nemo!
+                </p>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Unde, nostrum recusandae sit pariatur maxime, et fuga sequi
+                  non suscipit dolor delectus placeat hic sunt nam mollitia iure
+                  voluptates commodi numquam ipsam voluptate impedit officia
+                  magnam. Laborum exercitationem eum, fugit maxime illum
+                  assumenda dolor, ea, delectus blanditiis libero iste!
+                  Assumenda, veritatis alias neque odio dignissimos nemo!
+                </p>
               </div>
-              <div className="mb-3">
-                <Button
-                  type="submit"
-                  variant="dark"
-                  className="w-100"
-                  disabled={agreementCheck == false || isLoading}
-                >
-                  {isLoading ? (
-                    <Spinner animation="border" variant="secondary" />
-                  ) : (
-                    "Become Seller"
-                  )}
-                </Button>
-              </div>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
-    </Jumbotron>
+              <Form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    onChange={handleChange}
+                    id="agreement"
+                    label="I Agree"
+                  />
+                </div>
+                <div className="mb-3">
+                  <Button
+                    type="submit"
+                    variant="dark"
+                    className="w-100"
+                    disabled={agreementCheck == false || isLoading}
+                  >
+                    {isLoading ? (
+                      <Spinner animation="border" variant="secondary" />
+                    ) : (
+                      "Become Seller"
+                    )}
+                  </Button>
+                </div>
+              </Form>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

@@ -8,7 +8,8 @@ import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import BecomeSeller from "./pages/BecomeSeller/BecomeSeller";
 import AddBook from "./pages/Books/AddBook/AddBook";
-import FileAttachment from "./pages/Books/FileAttachment/FileAttachment";
+import AllCartList from "./pages/Cart/AllCartList/AllCartList";
+import BookDetail from "./pages/Books/BookDetail/BookDetail";
 
 function App() {
   return (
@@ -19,9 +20,9 @@ function App() {
         <Route path={Path.AUTH} element={<Auth />} />
         <Route path={Path.PROFILE} element={<Profile />} />
         <Route path={Path.BECOME_SELLER} element={<BecomeSeller />} />
-
+        <Route path={Path.MY_CARTS} element={<AllCartList />} />
         <Route path={Path.ADD_BOOK} element={<AddBook />} />
-        <Route path={Path.FILE_ATTACHMENT} element={<FileAttachment />} />
+        <Route path={Path.BOOK_DETAIL + ":slug"} element={<BookDetail />} />
       </Routes>
     </>
   );

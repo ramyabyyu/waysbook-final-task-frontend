@@ -15,6 +15,7 @@ import {
   FaBookMedical,
 } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
+import { BsBasket } from "react-icons/bs";
 import { getProfile, reset } from "../../features/profile/profileSlice";
 import { logout } from "../../features/auth/authSlice";
 
@@ -62,49 +63,61 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="waysbookNavbar">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             {isLogin ? (
-              <li className="nav-item">
-                <Dropdown>
-                  <Dropdown.Toggle id="user-dropdown" className="dropdown__btn">
-                    <img
-                      src={profile?.is_photo_change ? profile?.photo : noPhoto}
-                      alt="photo"
-                      width={40}
-                      className="rounded-pill"
-                    />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item as={Link} to={Path.PROFILE}>
-                      <FaUserAlt className="text-dark me-2" />
-                      <span>Profile</span>
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to={Path.PROFILE}>
-                      <FaCommentAlt className="text-dark me-2" />
-                      <span>Complain</span>
-                    </Dropdown.Item>
-                    {profile?.is_seller ? (
-                      <>
-                        <Dropdown.Item as={Link} to={Path.ADD_BOOK}>
-                          <FaBookMedical className="text-dark me-2" />
-                          <span>Add Book</span>
-                        </Dropdown.Item>
-                      </>
-                    ) : (
-                      <Dropdown.Item as={Link} to={Path.BECOME_SELLER}>
-                        <RiAdminFill className="text-dark me-2" />
-                        <span>Become Seller</span>
+              <>
+                <li className="nav-item me-2">
+                  <Link className="nav-link" to={Path.MY_CARTS}>
+                    <BsBasket className="fs-3 mt-1" />
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      id="user-dropdown"
+                      className="dropdown__btn"
+                    >
+                      <img
+                        src={
+                          profile?.is_photo_change ? profile?.photo : noPhoto
+                        }
+                        alt="photo"
+                        width={40}
+                        className="rounded-pill"
+                      />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item as={Link} to={Path.PROFILE}>
+                        <FaUserAlt className="text-dark me-2" />
+                        <span>Profile</span>
                       </Dropdown.Item>
-                    )}
-                    <Dropdown.Divider
-                      className="bg-secondary"
-                      onClick={handleLogout}
-                    />
-                    <Dropdown.Item onClick={handleLogout}>
-                      <FaSignOutAlt className="text-dark me-2" />
-                      <span>Logout</span>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </li>
+                      <Dropdown.Item as={Link} to={Path.PROFILE}>
+                        <FaCommentAlt className="text-dark me-2" />
+                        <span>Complain</span>
+                      </Dropdown.Item>
+                      {profile?.is_seller ? (
+                        <>
+                          <Dropdown.Item as={Link} to={Path.ADD_BOOK}>
+                            <FaBookMedical className="text-dark me-2" />
+                            <span>Add Book</span>
+                          </Dropdown.Item>
+                        </>
+                      ) : (
+                        <Dropdown.Item as={Link} to={Path.BECOME_SELLER}>
+                          <RiAdminFill className="text-dark me-2" />
+                          <span>Become Seller</span>
+                        </Dropdown.Item>
+                      )}
+                      <Dropdown.Divider
+                        className="bg-secondary"
+                        onClick={handleLogout}
+                      />
+                      <Dropdown.Item onClick={handleLogout}>
+                        <FaSignOutAlt className="text-dark me-2" />
+                        <span>Logout</span>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </li>
+              </>
             ) : (
               <li className="nav-item">
                 <Button variant="dark" as={Link} to={Path.AUTH}>

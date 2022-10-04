@@ -1,5 +1,8 @@
 import { API } from "../../config/api";
-import { jsonHeaderConfig } from "../../config/configHeader";
+import {
+  formDataHeaderConfig,
+  jsonHeaderConfig,
+} from "../../config/configHeader";
 
 // Get all book to serve in home page list book section
 const getAllBooks = async () => {
@@ -19,10 +22,34 @@ const getPromoBooks = async () => {
   return response.data.data;
 };
 
+// Get user's book to serve in profile page
+const getUserBooks = async (token) => {
+  const response = await API.get("/get-user-book", jsonHeaderConfig(token));
+  return response.data.data;
+};
+
+// get book by slug
+const getBookBySlug = async (slug, token) => {
+  const response = await API.get("/book/" + slug, jsonHeaderConfig(token));
+  return response.data.data;
+};
+
+const updateBookPromo = async (promoData, token) => {
+  const response = await API.post(
+    "/update-book-promo",
+    promoData,
+    jsonHeaderConfig(token)
+  );
+  return response.data.data;
+};
+
 const bookService = {
   getAllBooks,
   addBook,
   getPromoBooks,
+  getUserBooks,
+  getBookBySlug,
+  updateBookPromo,
 };
 
 export default bookService;
