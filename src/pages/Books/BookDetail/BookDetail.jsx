@@ -8,9 +8,16 @@ import Jumbotron from "../../../components/Jumbotron/Jumbotron";
 import { Card, Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useEffect } from "react";
 import * as Path from "../../../routeNames";
-import { convertToDate, formatRupiah } from "../../../helpers/bookHelpers";
+import {
+  convertToDate,
+  formatRupiah,
+  getPrice,
+} from "../../../helpers/bookHelpers";
 import { useState } from "react";
 import { updateBookPromo } from "../../../features/book/bookSlice";
+import { FaCartPlus } from "react-icons/fa";
+import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
+import { addToCart } from "../../../features/cart/cartSlice";
 
 const BookDetail = () => {
   const [promoData, setPromoData] = useState({
@@ -24,6 +31,16 @@ const BookDetail = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleAddToCart = (bookId, sellerId, subTotal) => {
+    const formData = new FormData();
+    formData.set("book_id", bookId);
+    formData.set("seller_id", sellerId);
+    formData.set("subtotal", subTotal);
+
+    dispatch(addToCart(formData));
+    navigate(Path.MY_CARTS);
+  };
 
   const handleSetPromo = (e) => {
     e.preventDefault();
@@ -63,13 +80,47 @@ const BookDetail = () => {
                   }}
                 />
                 <div className="ms-3">
-                  <div className="mb-5">
-                    <h2 className="font-serif title__book-font w-100">
-                      {book.title}
-                    </h2>
-                    <p className="text-muted">
-                      By. <span className="fst-italic">{book.author}</span>
-                    </p>
+                  <div className="mb-5 d-flex">
+                    <div className="me-5">
+                      <h2 className="font-serif title__book-font w-100">
+                        {book.title}
+                      </h2>
+                      <p className="text-muted">
+                        By. <span className="fst-italic">{book.author}</span>
+                      </p>
+                    </div>
+                    <div>
+                      {profile.id !== book.user_id && (
+                        <>
+                          <Button
+                            type="button"
+                            variant="dark"
+                            className="d-flex align-items-center"
+                            data-bs-toggle="modal"
+                            data-bs-target={`#${book.slug}`}
+                          >
+                            <FaCartPlus className="me-3" />
+                            <span>Add to cart</span>
+                          </Button>
+                          <ConfirmModal
+                            id={book.slug}
+                            body={`Add "${book.title}" to cart?`}
+                            title="Add to cart"
+                            confirmText="Confirm"
+                            cancelText="Cancel"
+                            confirmVariant="dark"
+                            cancelVariant="danger"
+                            handleConfirm={() => {
+                              handleAddToCart(
+                                book.id,
+                                book.user_id,
+                                getPrice(book.price, book.price_after_discount)
+                              );
+                            }}
+                          />
+                        </>
+                      )}
+                    </div>
                   </div>
                   <div className="mb-5">
                     <h5>Publication Date</h5>

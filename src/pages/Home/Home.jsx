@@ -206,7 +206,7 @@ const Home = () => {
               <Col md={3} key={book.id} className="me-3 mb-3">
                 <Card
                   className="rounded border-0 shadow p-2"
-                  style={{ height: "38rem" }}
+                  style={{ height: "30rem" }}
                 >
                   <Link
                     className="text-decoration-none"
@@ -240,65 +240,6 @@ const Home = () => {
                           )
                         : formatRupiah(book.price.toString(), "Rp. ")}
                     </h4>
-                    {profile?.id === book.user_id ? (
-                      <Button
-                        variant="dark"
-                        className="mt-5 d-flex justify-content-center align-items-center w-100"
-                        disabled
-                      >
-                        <FaUserCheck className="me-2" />
-                        <span>
-                          {token ? "You are the owner" : "Login First"}
-                        </span>
-                      </Button>
-                    ) : (
-                      <>
-                        {token ? (
-                          <>
-                            <Button
-                              variant="dark"
-                              className="mt-5 d-flex justify-content-center align-items-center w-100"
-                              type="button"
-                              data-bs-toggle="modal"
-                              data-bs-target={`#${book.slug}`}
-                            >
-                              <FaCartPlus className="me-2" />
-                              <span>Add to Cart</span>
-                            </Button>
-                            <ConfirmModal
-                              id={book.slug}
-                              body={`Add "${book.title}" to cart?`}
-                              title="Add to cart"
-                              confirmText="Confirm"
-                              cancelText="Cancel"
-                              confirmVariant="dark"
-                              cancelVariant="danger"
-                              handleConfirm={() => {
-                                handleAddToCart(
-                                  book.id,
-                                  book.user_id,
-                                  getPrice(
-                                    book.price,
-                                    book.price_after_discount
-                                  )
-                                );
-                              }}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <Button
-                              variant="dark"
-                              className="mt-5 d-flex justify-content-center align-items-center w-100"
-                              as={Link}
-                              to={Path.AUTH}
-                            >
-                              Login First
-                            </Button>
-                          </>
-                        )}
-                      </>
-                    )}
                   </div>
                 </Card>
               </Col>

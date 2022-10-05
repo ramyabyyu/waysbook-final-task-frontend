@@ -32,9 +32,6 @@ const AllCartList = () => {
     formData.set("cart_id", cartId);
     formData.set("user_id", userId);
 
-    console.log("cart id = ", cartId);
-    console.log("user id = ", userId);
-
     dispatch(deleteCart(formData));
   };
 
