@@ -43,6 +43,16 @@ const updateBookPromo = async (promoData, token) => {
   return response.data.data;
 };
 
+const addBookPurchased = async (bookData) => {
+  const response = await API.post("/add-book-purchased");
+  return response.data;
+};
+
+const findBookPurchaseds = async (token) => {
+  const response = await API.get("/book-purchaseds", jsonHeaderConfig(token));
+  return response.data.data;
+};
+
 const bookService = {
   getAllBooks,
   addBook,
@@ -50,6 +60,8 @@ const bookService = {
   getUserBooks,
   getBookBySlug,
   updateBookPromo,
+  addBookPurchased,
+  findBookPurchaseds,
 };
 
 export default bookService;

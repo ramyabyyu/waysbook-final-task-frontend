@@ -15,6 +15,7 @@ import { formatRupiah } from "../../../helpers/bookHelpers";
 import { FaTrashAlt, FaRegMoneyBillAlt } from "react-icons/fa";
 import giveMoneyImage from "../../../assets/Vector.png";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
+import { API } from "../../../config/api";
 
 const AllCartList = () => {
   const [prices, setPrices] = useState([0]);
@@ -22,6 +23,7 @@ const AllCartList = () => {
 
   const { carts } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
+  const { profile } = useSelector((state) => state.profile);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,6 +54,67 @@ const AllCartList = () => {
       });
     }
   }, [carts]);
+
+  useEffect(() => {
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    // const myMidtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY;
+    const myMidtransClientKey = "SB-Mid-client-ItYKMqL2lC-ARs2N";
+
+    let scriptTag = document.createElement("script");
+    scriptTag.src = midtransScriptUrl;
+
+    scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+
+    document.body.appendChild(scriptTag);
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
+
+  const handleBuy = async (total) => {
+    try {
+      const formData = new FormData();
+      formData.set("total", total);
+      formData.set("user_id", profile.id);
+
+      const response = await API.post("/transaction", formData);
+      console.log(response);
+
+      const formDataBookPurchased = new FormData();
+      formDataBookPurchased.set("user_id", profile.id);
+      formDataBookPurchased.set("book_id1", carts[0].book_id);
+      formDataBookPurchased.set("book_id2", carts[1].book_id);
+      formDataBookPurchased.set("book_id3", carts[2].book_id);
+
+      const responseBookPurchased = await API.post(
+        "/add-book-purchased",
+        formDataBookPurchased
+      );
+      console.log(responseBookPurchased);
+
+      const token = response.data.data.token;
+
+      window.snap.pay(token, {
+        onSuccess: function (result) {
+          /* You may add your own implementation here */
+          navigate(Path.PROFILE);
+        },
+        onPending: function (result) {
+          /* You may add your own implementation here */
+          navigate(Path.MY_CARTS);
+        },
+        onError: function (result) {
+          /* You may add your own implementation here */
+        },
+        onClose: function () {
+          /* You may add your own implementation here */
+          alert("You closed the popup without finishing the payment");
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -139,7 +202,14 @@ const AllCartList = () => {
                 <div className="trf__proof w-50 mb-2">
                   <img src={giveMoneyImage} className="give__money-img" />
                 </div>
-                <Button variant="dark" className="w-50" type="button">
+                <Button
+                  variant="dark"
+                  className="w-50"
+                  type="button"
+                  onClick={() =>
+                    handleBuy(prices.reduce((prev, curr) => prev + curr) / 2)
+                  }
+                >
                   Pay
                 </Button>
               </div>
