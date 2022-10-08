@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const noFileURL = "https://waysbook-backend.herokuapp.com//uploads/-";
+export const noFileURL = "https://waysbook-backend.herokuapp.com/uploads/-";
 
 export const API = axios.create({
-  baseURL: "https://waysbook-backend.herokuapp.com/",
+  baseURL: "https://waysbook-backend.herokuapp.com/api/v1",
 });
 
 export const setAuthToken = (token) => {

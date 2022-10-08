@@ -205,11 +205,7 @@ const Profile = () => {
                         to={Path.BOOK_DETAIL + book.slug}
                       >
                         <img
-                          src={noFileAvailable(
-                            book.thumbnail,
-                            noFileURL,
-                            noImage
-                          )}
+                          src={book.thumbnail}
                           style={{
                             width: "18rem",
                             height: "20rem",
